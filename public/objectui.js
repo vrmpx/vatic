@@ -406,12 +406,41 @@ function TrackObject(job, player, container, color)
 
     this.setupdetails = function()
     {
-        this.details.append("<input type='checkbox' id='trackobject" + this.id + "lost'> <label for='trackobject" + this.id + "lost'>Outside of view frame</label><br>");
+        // this.details.append("<input type='checkbox' id='trackobject" + this.id + "lost'> <label for='trackobject" + this.id + "lost'>Outside of view frame</label><br>");
         this.details.append("<input type='checkbox' id='trackobject" + this.id + "occluded'> <label for='trackobject" + this.id + "occluded'>Occluded or obstructed</label><br>");
+
+        var accordion = $("<div id='accordion'></div>");
+        this.details.append(accordion);
+
+
+
+        var groups = [];
+        var str = "";
+        var grp = "";
+        var check = "";
+        var attr = "";
 
         for (var i in this.job.attributes[this.track.label])
         {
-            this.details.append("<input type='checkbox' id='trackobject" + this.id + "attribute" + i + "'> <label for='trackobject" + this.id + "attribute" + i +"'>" + this.job.attributes[this.track.label][i] + "</label><br>");
+
+            /*******************************
+            * VM: Adding support for groups
+            *******************************/
+
+            //Split into group - attribute
+            str = this.job.attributes[this.track.label][i].split(":");
+            grp = str[0];
+            attr = str[1];
+
+            check = "<input type='checkbox' id='trackobject" + this.id + "attribute" + i + "'> <label for='trackobject" + this.id + "attribute" + i +"'>" + attr + "</label><br>";
+
+            if (groups.indexOf(grp) < 0) {
+                eventlog("objectui", "Adding " + grp + " to accordion");
+                accordion.append("<h3>" + grp + "</h3>");
+                accordion.append("<div id='" + grp + "'></div>");
+                groups.push(grp);
+            }
+            $("#" + grp).append(check);
 
             // create a closure on attributeid
             (function(attributeid) {
@@ -438,6 +467,13 @@ function TrackObject(job, player, container, color)
             })(i);
         }
 
+
+        accordion.accordion({
+            heightStyle:"content",
+            collapsible: true,
+            active:false
+
+        });
 
         $("#trackobject" + this.id + "lost").click(function() {
             me.player.pause();

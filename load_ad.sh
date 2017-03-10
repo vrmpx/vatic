@@ -1,0 +1,3 @@
+#!/bin/bash
+turkic delete ad_example --force
+turkic load ad_example ../vatic_output/ad_example/ character ~activity:shopping ~activity:driving ~activity:cleaning ~activity:cooking ~activity:working ~activity:socializing ~activity:nothing ~activity:eating_drinking ~activity:cant_tell ~activity:not_applicable ~activity:other ~setting:kitchen ~setting:office ~setting:car ~setting:store ~setting:outdoors ~setting:living_room ~setting:restaurant_bar ~setting:gym ~setting:cant_tell ~setting:not_applicable ~setting:other --offline

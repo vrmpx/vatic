@@ -257,6 +257,7 @@ code
     border : 2px solid black;
     font-family : Arial;
     font-size : 14px;
+    overflow: auto;
 }
 
 .trackobjectfoldedup
