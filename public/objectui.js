@@ -406,7 +406,7 @@ function TrackObject(job, player, container, color)
 
     this.setupdetails = function()
     {
-        // this.details.append("<input type='checkbox' id='trackobject" + this.id + "lost'> <label for='trackobject" + this.id + "lost'>Outside of view frame</label><br>");
+        this.details.append("<input type='checkbox' id='trackobject" + this.id + "lost'> <label for='trackobject" + this.id + "lost'>Outside of view frame</label><br>");
         this.details.append("<input type='checkbox' id='trackobject" + this.id + "occluded'> <label for='trackobject" + this.id + "occluded'>Occluded or obstructed</label><br>");
 
         var accordion = $("<div id='accordion'></div>");
@@ -432,7 +432,16 @@ function TrackObject(job, player, container, color)
             grp = str[0];
             attr = str[1];
 
-            check = "<input type='checkbox' id='trackobject" + this.id + "attribute" + i + "'> <label for='trackobject" + this.id + "attribute" + i +"'>" + attr + "</label><br>";
+
+            // // Check if its a radio button or not
+            // if (grp.indexOf("__radio") > 0){
+            //     grp = grp.split("__")[0];
+            //     type = "radio";
+            // } else {
+            //     type = "checkbox";
+            // }    
+
+            check = "<input type='checkbox' id='trackobject" + this.id + "attribute" + i + "' name='trackobject" + this.id + "'> <label for='trackobject" + this.id + "attribute" + i +"'>" + attr + "</label><br>";
 
             if (groups.indexOf(grp) < 0) {
                 eventlog("objectui", "Adding " + grp + " to accordion");
