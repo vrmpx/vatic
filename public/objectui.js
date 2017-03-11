@@ -151,7 +151,9 @@ function TrackObjectUI(button, container, videoframe, job, player, tracks)
         html += "<ul>";
         for (var i in this.job.labels)
         {
-            html += "<li>" + this.job.labels[i] + "</li>";
+            if(this.job.labels[i].indexOf("video:") == -1){
+                html += "<li>" + this.job.labels[i] + "</li>";
+            }
         }
         html += "</ul>";
 
@@ -290,7 +292,10 @@ function TrackObject(job, player, container, color)
         html += "<ul>";
         for (var i in this.job.labels)
         {
-            html += "<li>" + this.job.labels[i] + "</li>";
+            if(this.job.labels[i].indexOf("video:") == -1){
+                html += "<li>" + this.job.labels[i] + "</li>";
+            }
+
         }
         html += "</ul>";
         html += "<p>Do not annotate the same object twice.</p>";
@@ -312,8 +317,10 @@ function TrackObject(job, player, container, color)
         var firsti = 0;
         for (var i in this.job.labels)
         {
-            length++;
-            firsti = i;
+            if(this.job.labels[i].indexOf("video:") == -1){
+                length++;
+                firsti = i;
+            }
         }
 
         if (length == 1)
@@ -326,8 +333,10 @@ function TrackObject(job, player, container, color)
             var html = "<p>What type of object did you just annotate?</p>";
             for (var i in job.labels)
             {
-                var id = "classification" + this.id + "_" + i;
-                html += "<div class='label'><input type='radio' name='classification" + this.id + "' id='" + id + "'> <label for='" + id + "'>" + job.labels[i] + "</label></div>";
+                if(this.job.labels[i].indexOf("video:") == -1){
+                    var id = "classification" + this.id + "_" + i;
+                    html += "<div class='label'><input type='radio' name='classification" + this.id + "' id='" + id + "'> <label for='" + id + "'>" + job.labels[i] + "</label></div>";
+                }
             }
 
             this.classifyinst = $("<div>" + html + "</div>").appendTo(this.handle);
@@ -340,12 +349,14 @@ function TrackObject(job, player, container, color)
 
                 for (var i in me.job.labels)
                 {
-                    var id = "classification" + me.id + "_" + i;
-                    if ($("#" + id + ":checked").size() > 0)
-                    {
-                        me.finalize(i);
-                        me.statefolddown();
-                        break;
+                    if(me.job.labels[i].indexOf("video:") == -1){
+                        var id = "classification" + me.id + "_" + i;
+                        if ($("#" + id + ":checked").size() > 0)
+                        {
+                            me.finalize(i);
+                            me.statefolddown();
+                            break;
+                        }
                     }
                 }
 

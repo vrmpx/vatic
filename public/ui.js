@@ -29,7 +29,7 @@ function ui_setup(job)
 
     $("<table>" + 
         "<tr>" +
-            "<td><div id='instructionsbutton' class='button'>Instructions</div><div id='instructions'>Annotate every object, even stationary and obstructed objects, for the entire video.</td>" +
+            "<td><div id='instructionsbutton' class='button'>Instructions</div><div id='videobutton' class='button'>View video</div><div id='instructions'>Annotate every object, even stationary and obstructed objects, for the entire video.</td>" +
             "<td><div id='topbar'></div></td>" +
         "</tr>" +
         "<tr>" +
@@ -129,6 +129,28 @@ function ui_setupbuttons(job, player, tracks)
             primary: "ui-icon-newwin"
         }
     });
+
+    // VM: View video button
+    $("#videobutton").click(function(){
+        player.pause();
+        // console.log("videobutton", job)
+        // Get video from job
+        for (var i in job.labels){
+            if(job.labels[i].indexOf("video:") > 0){
+                break;
+            }
+        }
+        // Split into video:URL
+        var tmp = job.labels[i].indexOf(":");
+        var video_url = job.labels[i].slice(tmp + 1);
+        window.open(video_url);
+
+    }).button({
+        icons: {
+            primary: "ui-icon-video"
+        }
+    });
+
 
     // $("#playbutton").click(function() {
     //     if (!$(this).button("option", "disabled"))
